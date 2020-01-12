@@ -50,7 +50,7 @@ class Todo
 
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime('now'));
+        $this->createdAt = new \DateTime('now');
     }
 
     public function getId(): ?int
