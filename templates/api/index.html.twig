@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Simple Html Todo List!{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="ul">
+            {% for todo in list %}
+                <li>
+                    <span class="title">{{ todo.title }}</span>
+                    <span class="content">{{ todo.content }}</span>
+                    <span class="createdAt">{{ todo.createdAt ? todo.createdAt|date('Y-m-d H:i:s') : '' }}</span>
+                    <span class="status {% if todo.status > 0 %}done{% endif %}"></span>
+                </li>
+            {% else %}
+                <li>List is empty</li>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
