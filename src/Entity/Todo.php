@@ -51,6 +51,7 @@ class Todo
     public function __construct()
     {
         $this->createdAt = new \DateTime('now');
+        $this->inStatus = 0;
     }
 
     public function getId(): ?int
