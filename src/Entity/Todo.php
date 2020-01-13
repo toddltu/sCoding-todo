@@ -13,7 +13,7 @@ class Todo
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column("integer")
+     * @ORM\Column(type="integer")
      */
     private $id;
 
@@ -36,7 +36,6 @@ class Todo
     private $content;
 
     /**
-     * @Assert\DateTime()
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
@@ -51,8 +50,7 @@ class Todo
 
     public function __construct()
     {
-        $date = new \DateTime('now');
-        $this->createdAt = $date; //->format('Y-m-d H:i:s');
+        $this->createdAt = new \DateTime('@'. time()); //->format('Y-m-d H:i:s');
         $this->inStatus = 0;
     }
 
@@ -85,7 +83,7 @@ class Todo
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }

@@ -1,13 +1,25 @@
 <?php
 namespace App\Service;
 
-
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
+use App\Entity\Todo;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ApiHelper
 {
+    protected $serializer;
+    protected $validator;
+
+    public function __construct(
+        SerializerInterface $serializer,
+        ValidatorInterface $validation
+    ){
+        $this->serializer = $serializer;
+        $this->validator = $validation;
+    }
+
     public function checkHeader(Request $request): bool
     {
         $header = $request->headers->contains('accept', 'application/json');
@@ -17,30 +29,28 @@ class ApiHelper
     }
 
     /**
-     * @param FormInterface $form
-     * @return array
+     * @param string $data - json data in string format
+     * @param string $model - entity class
+     * @return array|object
+     * @description runs Validate on given $data and $model class
      */
-    public function getErrorMessages(FormInterface $form): array
-    {
-        $errors = array();
-        foreach ($form->getErrors() as $key => $error) {
-            $template = $error->getMessageTemplate();
-            $parameters = $error->getMessageParameters();
-
-            foreach ($parameters as $var => $value) {
-                $template = str_replace($var, $value, $template);
-            }
-
-            $errors[$key] = $template;
+    public function validate(string $data, string $model){
+        if (!$data) {
+            throw new BadRequestHttpException('Empty body.');
         }
-        if ($form->count()) {
-            /** @var Form $child */
-            foreach ($form as $child) {
-                if (!$child->isValid()) {
-                    $errors[$child->getName()] = $this->getErrorMessages($child);
-                }
-            }
+
+        try {
+            $object = $this->serializer->deserialize($data, $model, 'json');
+        } catch (\Exception $e) {
+            throw new BadRequestHttpException('Invalid body.');
         }
-        return $errors;
+
+        $err = $this->validator->validate($object);
+
+        if($err->count()) {
+            throw new BadRequestHttpException($err);
+        }
+
+        return $object;
     }
 }
