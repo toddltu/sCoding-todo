@@ -13,14 +13,15 @@ class Todo
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column("integer")
      */
     private $id;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Type(
-     *     type="string"
+     *     type="string",
+     *     message="Title value has to be STRING"
      * )
      * @ORM\Column(type="string", length=255)
      */
@@ -50,7 +51,8 @@ class Todo
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime('now');
+        $date = new \DateTime('now');
+        $this->createdAt = $date; //->format('Y-m-d H:i:s');
         $this->inStatus = 0;
     }
 
