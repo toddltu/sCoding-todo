@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Todo;
+use App\Form\TodoType;
 use App\Repository\TodoRepository;
 use App\Service\ApiHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,7 +64,21 @@ class ApiController extends AbstractController
             return $this->json(['id'=> $object->getId(), 'item'=>$object, 'status'=>201],201);
         }
 
+        $todo = new Todo();
+        $form = $this->createForm(TodoType::class, $todo);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($todo);
+            $entityManager->flush();
 
+            return $this->redirectToRoute('api');
+        }
+
+        return $this->render('api/new.html.twig', [
+            'todo' => $todo,
+            'form' => $form->createView(),
+        ]);
     }
 }
