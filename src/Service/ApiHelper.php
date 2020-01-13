@@ -1,7 +1,6 @@
 <?php
 namespace App\Service;
 
-use App\Entity\Todo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -20,10 +19,21 @@ class ApiHelper
         $this->validator = $validation;
     }
 
-    public function checkHeader(Request $request): bool
+    /**
+     * @param Request $request
+     * @param int $methodInt [ 0 = POST, 1 = PUT, 2 = DELETE ]
+     * @return bool
+     */
+    public function checkHeader(Request $request, int $methodInt = 0): bool
     {
+        $methods = [
+            'POST',
+            'PUT',
+            'DELETE'
+        ];
+
         $header = $request->headers->contains('accept', 'application/json');
-        $method = $request->isMethod('POST');
+        $method = $request->isMethod($methods[$methodInt]);
 
         return $header && $method;
     }

@@ -4,11 +4,7 @@ namespace App\Form;
 
 use App\Entity\Todo;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +21,8 @@ class TodoType extends AbstractType
                 // 'invalid_message' => 'Title has to be string'
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Content'
+                'label' => 'Content',
+                'required' => false
             ])
             // ->add('createdAt', DateTimeType::class)
             ->add('inStatus', ChoiceType::class, [
@@ -38,9 +35,9 @@ class TodoType extends AbstractType
                 'value' => 0,
                 'data' => 0*/
             ])
-            ->add('save', SubmitType::class, [
+            /*->add('save', SubmitType::class, [
                 'label' => 'Add item'
-            ])
+            ])*/
         ;
     }
 
