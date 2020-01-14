@@ -18,11 +18,23 @@ class TodoType extends AbstractType
             ->add('title', TextType::class, [
                 'required' => true,
                 'label' => 'Title',
+                'row_attr' => [
+                    'attr' => 'form-group'
+                ],
+                'attr'  => [
+                    'class' => 'form-control'
+                ]
                 // 'invalid_message' => 'Title has to be string'
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Content',
-                'required' => false
+                'required' => false,
+                'row_attr' => [
+                    'attr' => 'form-group'
+                ],
+                'attr'  => [
+                    'class' => 'form-control'
+                ]
             ])
             // ->add('createdAt', DateTimeType::class)
             ->add('inStatus', ChoiceType::class, [
@@ -30,6 +42,12 @@ class TodoType extends AbstractType
                 'choices' => [
                     'Yes' => 1,
                     'No' => 0
+                ],
+                'row_attr' => [
+                    'attr' => 'form-group'
+                ],
+                'attr'  => [
+                    'class' => 'form-control'
                 ]
                 /*'false_values' => [0],
                 'value' => 0,

@@ -7,6 +7,7 @@ use App\Entity\Todo;
 use App\Form\TodoType;
 use App\Repository\TodoRepository;
 use App\Service\ApiHelper;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -86,19 +87,21 @@ class ApiController extends AbstractController
      * @Route("/update/{id}", name="todo_update", methods={"GET", "POST", "PUT"})
      * @param Request $request
      * @param Todo $todo
+     * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Request $request, Todo $todo)
+    public function update(Request $request, Todo $todo, EntityManagerInterface $entityManager)
     {
         if ($this->apiHelper->checkHeader($request, 1)) {
             /** @var Todo $object */
             $object = $this->apiHelper->validate($request->getContent(), Todo::class);
+            $todo->setTitle($object->getTitle());
+            $todo->setContent($object->getContent());
+            $todo->setInStatus($object->getInStatus());
+            $entityManager->flush();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($object);
-            $em->flush();
 
-            return $this->json(['id'=> $object->getId(), 'item'=>$object, 'status'=>201],201);
+            return $this->json(['result'=> true, 'status'=>201],201);
         }
 
         $form = $this->createForm(TodoType::class, $todo);
@@ -148,7 +151,7 @@ class ApiController extends AbstractController
             $em->remove($todo);
             $em->flush();
 
-            return $this->json(['id'=> $todo->getId(), 'item'=>$todo, 'status'=>200]);
+            return $this->json(['result' => true, 'status'=>201], 201);
         }
         if ($this->isCsrfTokenValid('delete'.$todo->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

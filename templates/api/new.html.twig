@@ -3,9 +3,12 @@
 {% block title %}New Todo{% endblock %}
 
 {% block body %}
-    <h1>Create new Todo</h1>
-
-    {{ include('api/_form.html.twig') }}
-
-    <a href="{{ path('todo_index') }}">back to list</a>
+    <div class="card mt-5" style="margin: 0 auto; width: 20vw; min-width: 400px; max-width: 600px;">
+        <div class="card-body">
+            <h3 class="card-title">New Todo item</h3>
+            <div class="card-text">
+            {{ include('api/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

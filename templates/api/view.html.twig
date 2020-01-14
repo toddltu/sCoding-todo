@@ -3,7 +3,38 @@
 {% block title %}Todo{% endblock %}
 
 {% block body %}
-    <h1>Todo</h1>
+    <div class="card mt-5" style="margin: 0 auto; width: 20vw; min-width: 400px; max-width: 600px;">
+        <div class="card-body">
+            <h3 class="card-title float-left">{{ todo.title }}</h3>
+            <div class="float-right">{{ include('api/_delete_form.html.twig') }}</div>
+            <div style="clear: both"></div>
+            <div class="card-text mb-3">
+                <div>
+                    <span class="font-weight-bold" style="max-width:100px;width:100%;display:inline-block;">ID:</span>
+                    <span>{{ todo.id }}</span></div>
+                <div>
+                    <span class="font-weight-bold" style="max-width:100px;width:100%;display:inline-block;">Content:</span>
+                    <span>{{ todo.content }}</span></div>
+                <div>
+                    <span class="font-weight-bold" style="max-width:100px;width:100%;display:inline-block;">Done:</span>
+                    <span>
+                        {% if todo.inStatus > 0 %}
+                            <i class="text-success fas fa-check"></i>
+                        {% else %}
+                            <i class="text-danger fas fa-times"></i>
+                        {% endif %}
+                    </span>
+                </div>
+                <div>
+                    <span class="font-weight-bold" style="max-width:100px;width:100%;display:inline-block;">Created at:</span>
+                    <span>{{ todo.createdAt ? todo.createdAt|date('Y-m-d H:i:s') : '' }}</span>
+                    </div>
+            </div>
+            <a class="btn btn-outline-secondary" href="{{ path('todo_index') }}">back to list</a>
+            <a class="btn btn-info float-right" href="{{ path('todo_update', {'id': todo.id}) }}">edit</a>
+        </div>
+    </div>
+    {# <h1>Todo</h1>
 
     <table class="table">
         <tbody>
@@ -28,11 +59,5 @@
             <td>{{ todo.inStatus }}</td>
         </tr>
         </tbody>
-    </table>
-
-    <a href="{{ path('todo_index') }}">back to list</a>
-
-    <a href="{{ path('todo_update', {'id': todo.id}) }}">edit</a>
-
-    {{ include('api/_delete_form.html.twig') }}
+    </table> #}
 {% endblock %}

@@ -1,4 +1,6 @@
+
 {{ form_start(form) }}
     {{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Add item') }}</button>
+    <button class="card-link btn btn-success mt-4 float-right">{{ button_label|default('Add item') }}</button>
+    <a class="card-link btn btn-outline-secondary ml-0 mt-4" href="{{ path('todo_index') }}">back to list</a>
 {{ form_end(form) }}
