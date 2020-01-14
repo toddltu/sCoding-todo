@@ -1,5 +1,4 @@
 <?php
-// http://www.inanzzz.com/index.php/post/nx2b/validating-serialising-and-mapping-json-request-to-model-classes
 
 namespace App\Controller;
 
@@ -101,7 +100,7 @@ class ApiController extends AbstractController
             $entityManager->flush();
 
 
-            return $this->json(['result'=> true, 'status'=>201],201);
+            return $this->json(['result'=> true, 'status'=>202],202);
         }
 
         $form = $this->createForm(TodoType::class, $todo);
@@ -151,7 +150,7 @@ class ApiController extends AbstractController
             $em->remove($todo);
             $em->flush();
 
-            return $this->json(['result' => true, 'status'=>201], 201);
+            return $this->json(['result' => true, 'status'=>202], 202);
         }
         if ($this->isCsrfTokenValid('delete'.$todo->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -161,4 +160,11 @@ class ApiController extends AbstractController
 
         return $this->redirectToRoute('todo_index');
     }
+
+    /*/**
+     * @Route("/doc", name="todo_doc", methods={"GET"}
+     * /
+    public function doc(){
+        return $this->render('api/doc.html.twig');
+    }*/
 }

@@ -1,0 +1,127 @@
+{
+	"variables": [],
+	"info": {
+		"name": "SimpleTodo",
+		"_postman_id": "237eecf8-acfb-be88-4094-19c604493a0e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Item",
+			"request": {
+				"url": "https://localhost:8000/api/create/1",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"title\":\"New title\",\n\t\"content\": \"New content\",\n\t\"inStatus\":0\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of items",
+			"request": {
+				"url": "https://localhost:8000/api/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View item",
+			"request": {
+				"url": "https://localhost:8000/api/view/1",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Item",
+			"request": {
+				"url": "https://localhost:8000/api/update/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"title\":\"Change title\",\n\t\"content\": \"Change content\",\n\t\"inStatus\":0\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delte Item",
+			"request": {
+				"url": "https://localhost:8000/api/delete/1",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
